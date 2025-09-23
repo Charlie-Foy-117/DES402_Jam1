@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PlayerInput
 {
@@ -13,6 +14,17 @@ namespace PlayerInput
         public KeyCode Left;
         public KeyCode Right;
     }
+
+    [System.Serializable]
+    public class ControllerInputs
+    {
+        public string A;
+        public string B;
+
+        public string Vertical;
+        public string Horizontal;
+    }
+    [System.Serializable]
     public class COMInputs
     {
         public int A;
@@ -23,6 +35,7 @@ namespace PlayerInput
         public int Left;
         public int Right;
     }
+
     public struct InputState
     {
         public bool A;
@@ -43,10 +56,13 @@ namespace PlayerInput
 
         public System.Action<int, Vector2> onDirectionInput;
 
-        public KeyboardInputs keyboard;
+        public KeyboardInputs Keyboard;
+        public ControllerInputs Controller;
         public COMInputs COM;
 
         private int PlayerID = -1;
+
+        private SingleComPortController Comtroller;
 
         private InputState State;
         private InputState LastState;
@@ -124,6 +140,12 @@ namespace PlayerInput
             COM.Left = btns[4];
             COM.Right = btns[5];
         }
+
+        public void SetComtroller(ref SingleComPortController masterComtroller)
+        {
+            Comtroller = masterComtroller;
+        }
+
         public void SetListeners(InputActions actions, int playerID)
         {
             onButtonAPressedEvents += actions.APressed;
@@ -142,7 +164,10 @@ namespace PlayerInput
         public void Update()
         {
             LastState = State;
-            State.A = Input.GetKey(keyboard.A);
+            //TODO: This could be nicer
+            State.A = Input.GetKey(Keyboard.A) ||
+                Input.GetButton(Controller.A) ||
+                GetCOMState(COM.A);
             if (State.A && !LastState.A)
             {
                 onButtonAPressedEvents?.Invoke(PlayerID);
@@ -156,7 +181,9 @@ namespace PlayerInput
                 onButtonADownEvents?.Invoke(PlayerID);
             }
 
-            State.B = Input.GetKey(keyboard.B);
+            State.B = Input.GetKey(Keyboard.B) ||
+                Input.GetButton(Controller.B) ||
+                GetCOMState(COM.B);
             if (State.B && !LastState.B)
             {
                 onButtonBPressedEvents?.Invoke(PlayerID);
@@ -170,12 +197,24 @@ namespace PlayerInput
                 onButtonBDownEvents?.Invoke(PlayerID);
             }
 
-            Vector2 Dir = new Vector2((Input.GetKey(keyboard.Left) ? -1 : 0) + (Input.GetKey(keyboard.Right) ? 1 : 0), 0);
+
+            Vector2 Dir = new Vector2((Input.GetKey(Keyboard.Left) ? -1 : 0) + (Input.GetKey(Keyboard.Right) ? 1 : 0)
+                + Input.GetAxis(Controller.Horizontal)
+                + (GetCOMState(COM.Left) ? -1 : 0) + (GetCOMState(COM.Right) ? 1 : 0),
+
+                (Input.GetKey(Keyboard.Up) ? 1 : 0) + (Input.GetKey(Keyboard.Down) ? -1 : 0)
+                + Input.GetAxis(Controller.Vertical)
+               + (GetCOMState(COM.Up) ? 1 : 0) + (GetCOMState(COM.Down) ? -1 : 0)).normalized;
             State.Direction = Dir;
             if (onDirectionInput != null)
             {
                 onDirectionInput(PlayerID, Dir);
             }
+        }
+
+        bool GetCOMState(int keyValue)
+        {
+            return Comtroller.ButtonHeld(keyValue);
         }
     }
 }

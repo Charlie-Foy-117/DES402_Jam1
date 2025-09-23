@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3925472199436055704}
   - component: {fileID: 7135636570425201396}
+  - component: {fileID: 1021052430668715999}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -45,10 +46,92 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput:
-  - keyboard:
-      A: 32
-      B: 9
+  - Keyboard:
+      A: 122
+      B: 120
       Up: 119
       Down: 115
       Left: 97
       Right: 100
+    Controller:
+      A: A_1
+      B: B_1
+      Vertical: Vertical_1
+      Horizontal: Horizontal_1
+    COM:
+      A: 23
+      B: 18
+      Up: 20
+      Down: 21
+      Left: 22
+      Right: 19
+  - Keyboard:
+      A: 118
+      B: 98
+      Up: 116
+      Down: 103
+      Left: 102
+      Right: 104
+    Controller:
+      A: A_2
+      B: B_2
+      Vertical: Vertical_2
+      Horizontal: Horizontal_2
+    COM:
+      A: 17
+      B: 12
+      Up: 14
+      Down: 15
+      Left: 16
+      Right: 13
+  - Keyboard:
+      A: 109
+      B: 44
+      Up: 105
+      Down: 107
+      Left: 106
+      Right: 108
+    Controller:
+      A: A_3
+      B: B_3
+      Vertical: Vertical_3
+      Horizontal: Horizontal_3
+    COM:
+      A: 11
+      B: 6
+      Up: 8
+      Down: 9
+      Left: 10
+      Right: 7
+  - Keyboard:
+      A: 256
+      B: 266
+      Up: 273
+      Down: 274
+      Left: 276
+      Right: 275
+    Controller:
+      A: A_4
+      B: B_4
+      Vertical: Vertical_4
+      Horizontal: Horizontal_4
+    COM:
+      A: 5
+      B: 0
+      Up: 2
+      Down: 3
+      Left: 4
+      Right: 1
+--- !u!114 &1021052430668715999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590990111890718078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67e75fd8f99d014fad401a18ad5ced4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchIterations: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class GameManager : MonoBehaviour
     private int[] buttonASuccessiveInputs;
     private int[] buttonBSuccessiveInputs;
 
+    private bool[] inputBlocked;
+    private bool[] portsFound;
+
+    private bool verifiedPorts = false;
+
     private PlayerInput.InputManager inputManager;
     private PlayerManager playerManager;
 
@@ -22,13 +28,25 @@ public class GameManager : MonoBehaviour
         {
             inputManager = Instantiate<PlayerInput.InputManager>(Resources.Load<PlayerInput.InputManager>("InputManager"));
         }
+        inputManager.OnPortsVerified += HandlePortVerification;
+
+        buttonASuccessiveInputs = new int[4];
+        buttonBSuccessiveInputs = new int[4];
+        inputBlocked = new bool[4];
+        portsFound = new bool[4];
 
         playerManager = GetComponent<PlayerManager>();
         //playerManager.Initialise(this);
+        m_AnyPlayerInput = new bool[4];
+
+        //Cursor.visible = false;
     }
 
     private void Start()
     {
+        //GameAPI.ComPortLoader.SetActive(true);
+        verifiedPorts = false;
+
         inputManager.InitialiseActions(new PlayerInput.InputActions
         {
             APressed = OnStartJump,
@@ -61,5 +79,17 @@ public class GameManager : MonoBehaviour
     public void OnJumpFinished(int playerIndex)
     {
 
+    }
+
+    public void HandlePortVerification(bool[] playerPortsFound)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            portsFound[i] = playerPortsFound[i];
+            GameAPI.PlayPrompts[i].SetActive(portsFound[i]);
+        }
+
+        GameAPI.ComPortLoader.SetActive(false);
+        verifiedPorts = true;
     }
 }
