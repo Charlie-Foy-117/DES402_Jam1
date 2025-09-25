@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Player Stats")]
-    public int index = 0;
+    public int playerID = 0;
     [SerializeField] private float moveSpeed;
     [SerializeField] private Vector3 jump;
     [SerializeField] private float jumpForce = 2.0f;
@@ -15,13 +15,13 @@ public class Player : MonoBehaviour
     public PlayerManager playerManager;
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
-
+    [SerializeField] private int screenID;
 
     //public Player() { }
 
     public void Initialise(int index)
     {
-        this.index = index;
+        this.playerID = index;
     }
 
     private void Start()
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform"))
+        if (other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Floor"))
         {
             Vector3 normal = other.GetContact(0).normal;
             if (normal == Vector3.up)
@@ -41,7 +41,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
 
     public void OnStartJump()
     {
@@ -57,5 +56,6 @@ public class Player : MonoBehaviour
     {
         //Debug.Log($"rb {( rb == null ? "null" : "not null")}");
         transform.position += moveSpeed * (Vector3)direction * Time.deltaTime;
+        transform.position = ScreenUtility.ClampToScreen(transform.position, screenID, 0.5f);
     }
 }

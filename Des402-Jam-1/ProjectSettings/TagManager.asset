@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Platform
+  - Floor
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -41,6 +43,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 258116343
+    locked: 0
+  - name: Objects
+    uniqueID: 764946953
+    locked: 0
+  - name: Player
+    uniqueID: 4150015653
     locked: 0
   m_RenderingLayers:
   - Default

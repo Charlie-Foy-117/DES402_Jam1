@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnDirectionalInput(int playerIndex, Vector2 direction)
     {
-        playerAxisInput[playerIndex] = new Vector2(direction.x,1 );
+        playerAxisInput[playerIndex] = new Vector2(direction.x, 0);
         playerManager.players[playerIndex].OnDirectionalInput(direction);
     }
 

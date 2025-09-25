@@ -200,11 +200,11 @@ namespace PlayerInput
 
             Vector2 Dir = new Vector2((Input.GetKey(Keyboard.Left) ? -1 : 0) + (Input.GetKey(Keyboard.Right) ? 1 : 0)
                 + Input.GetAxis(Controller.Horizontal)
-                + (GetCOMState(COM.Left) ? -1 : 0) + (GetCOMState(COM.Right) ? 1 : 0),
+                + (GetCOMState(COM.Left) ? -1 : 0) + (GetCOMState(COM.Right) ? 1 : 0), 0);
 
-                (Input.GetKey(Keyboard.Up) ? 1 : 0) + (Input.GetKey(Keyboard.Down) ? -1 : 0)
+                /*(Input.GetKey(Keyboard.Up) ? 1 : 0) + (Input.GetKey(Keyboard.Down) ? -1 : 0)
                 + Input.GetAxis(Controller.Vertical)
-               + (GetCOMState(COM.Up) ? 1 : 0) + (GetCOMState(COM.Down) ? -1 : 0)).normalized;
+               + (GetCOMState(COM.Up) ? 1 : 0) + (GetCOMState(COM.Down) ? -1 : 0)).normalized;*/
             State.Direction = Dir;
             if (onDirectionInput != null)
             {
