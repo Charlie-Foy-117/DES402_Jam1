@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public PlayerManager playerManager;
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
+    [SerializeField] private float weight = 0;
     [SerializeField] private int screenID;
 
     //public Player() { }
@@ -42,6 +43,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Collectable"))
+        {
+            Debug.Log("Collectable picked up");
+            Destroy(other.gameObject);
+            UpdateJumpForce();
+        }
+    }
+
     public void OnStartJump()
     {
         //Debug.Log("Player " + index + " jumped");
@@ -57,5 +68,11 @@ public class Player : MonoBehaviour
         //Debug.Log($"rb {( rb == null ? "null" : "not null")}");
         transform.position += moveSpeed * (Vector3)direction * Time.deltaTime;
         transform.position = ScreenUtility.ClampToScreen(transform.position, screenID, 0.5f);
+    }
+
+    private void UpdateJumpForce()
+    {
+        float jumpMultiplier = 1 - weight;
+        jumpForce = jumpForce * jumpMultiplier; 
     }
 }

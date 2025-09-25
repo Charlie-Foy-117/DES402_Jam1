@@ -100,11 +100,11 @@ public static class ScreenUtility
 
     public static Vector2 ClampToScreen(Vector2 posToTest, int screenID, float buffer = 0.0f)
     {
-        float minY = -5.0f; float h = 10f;
+        //float minY = -5.0f; float h = 10f;
         float minX = -10.0f; float w = 5.0f;
 
         posToTest.x = Mathf.Clamp(posToTest.x, (minX + (w * screenID)) + buffer, minX + ((w * screenID) + w) - buffer);
-        posToTest.y = Mathf.Clamp(posToTest.y, minY + buffer, (minY + h) - buffer);
+        //posToTest.y = Mathf.Clamp(posToTest.y, minY + buffer, (minY + h) - buffer);
         return posToTest;
     }
 }
