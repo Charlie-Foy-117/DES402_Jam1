@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
     [SerializeField] private float weight = 0;
     [SerializeField] private int screenID;
+    [SerializeField] private float coyoteTime;
 
     //public Player() { }
 
@@ -43,6 +45,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            StartCoroutine(CoyoteTimeCoroutine());
+        } 
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Collectable"))
@@ -51,6 +61,12 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
             UpdateJumpForce();
         }
+    }
+
+    IEnumerator CoyoteTimeCoroutine()
+    {
+        yield return new WaitForSeconds(coyoteTime);
+        isGrounded = false;
     }
 
     public void OnStartJump()
