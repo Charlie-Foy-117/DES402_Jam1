@@ -1,8 +1,12 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public enum GameState { START, GAMEACTIVE, END};
     //Input
     private Vector2[] playerAxisInput = new Vector2[4];
     private bool[] m_AnyPlayerInput;
@@ -60,15 +64,22 @@ public class GameManager : MonoBehaviour
             DirectionInput = OnDirectionalInput
         });
     }
+
     public void OnDirectionalInput(int playerIndex, Vector2 direction)
     {
         playerAxisInput[playerIndex] = new Vector2(direction.x, 0);
         playerManager.players[playerIndex].OnDirectionalInput(direction);
+
+        m_AnyPlayerInput[playerIndex] = true;
+        playerManager.players[playerIndex].isIdling = false;
     }
 
     public void OnStartJump(int playerIndex)
     {
         playerManager.players[playerIndex].OnStartJump();
+        m_AnyPlayerInput[playerIndex] = true;
+        playerManager.players[playerIndex].isIdling = false;
+
     }
 
     public void OnJumping(int playerIndex)
