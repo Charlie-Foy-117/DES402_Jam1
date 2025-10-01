@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         //playerManager.Initialise(this);
         m_AnyPlayerInput = new bool[4];
 
-        //Cursor.visible = false;
+        Cursor.visible = false;
     }
 
     private void Start()
@@ -54,12 +54,12 @@ public class GameManager : MonoBehaviour
         inputManager.InitialiseActions(new PlayerInput.InputActions
         {
             APressed = OnStartJump,
-            ADown = OnJumping,
-            AReleased = OnJumpFinished,
+            //ADown = OnJumping,
+            //AReleased = OnJumpFinished,
 
-            //BPressed = ,
-            //BDown = ,
-            //BReleased = ,
+            BPressed = OnInteractPressed,
+            //BDown = OnInteractHeld,
+            //BReleased = OnInteractReleased,
 
             DirectionInput = OnDirectionalInput
         });
@@ -81,18 +81,15 @@ public class GameManager : MonoBehaviour
     {
         playerManager.players[playerIndex].OnStartJump();
         m_AnyPlayerInput[playerIndex] = true;
-       // playerManager.players[playerIndex].isIdling = false;
+        playerManager.players[playerIndex].isIdling = false;
 
     }
 
-    public void OnJumping(int playerIndex)
+    public void OnInteractPressed(int playerIndex)
     {
-
-    }
-
-    public void OnJumpFinished(int playerIndex)
-    {
-
+        playerManager.players[playerIndex].OnInteractPressed();
+        m_AnyPlayerInput[playerIndex] = true;
+        playerManager.players[playerIndex].isIdling = false;
     }
 
     public void HandlePortVerification(bool[] playerPortsFound)

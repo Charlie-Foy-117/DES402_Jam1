@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class Player : MonoBehaviour
 {
     [HideInInspector]
-    public enum PlayerState { IDLE, ACTIVE };
+    public enum PlayerState { IDLE, ACTIVE, INTERACT };
 
     [Header("Player Stats")]
     public int playerID = 0;
@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float weight = 0;
     [SerializeField] private int screenID;
     [SerializeField] private float coyoteTime;
+    [SerializeField] private bool interactActive;
 
     [Header("Player State")]
     public PlayerState state;
@@ -70,7 +71,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Platform"))
         {
             StartCoroutine(CoyoteTimeCoroutine());
-        } 
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -81,6 +82,51 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
             UpdateJumpForce();
         }
+        if (other.gameObject.CompareTag("NPC"))
+        {
+            interactActive = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("NPC"))
+        {
+            interactActive = false;
+        }
+    }
+
+    public void ChangePlayerState(PlayerState state)
+    {
+        switch (state)
+        {
+            case PlayerState.IDLE:
+                OnIdleState();
+                break;
+            case PlayerState.ACTIVE:
+                OnActiveState();
+                break;
+            case PlayerState.INTERACT:
+                OnInteractState();
+                break;
+        }
+    }
+
+    private void OnIdleState()
+    {
+        playerManager.SetIdleScreenVisibility(playerID, true);
+        state = PlayerState.IDLE;
+    }
+
+    private void OnActiveState()
+    {
+        playerManager.SetIdleScreenVisibility(playerID, false);
+        state = PlayerState.ACTIVE;
+    }
+
+    private void OnInteractState()
+    {
+        state = PlayerState.INTERACT;
     }
 
     IEnumerator CoyoteTimeCoroutine()
@@ -109,6 +155,15 @@ public class Player : MonoBehaviour
             //Debug.Log($"rb {( rb == null ? "null" : "not null")}");
             transform.position += moveSpeed * (Vector3)direction * Time.deltaTime;
             transform.position = ScreenUtility.ClampToScreen(transform.position, screenID, 0.5f);
+        }
+    }
+
+    public void OnInteractPressed()
+    {
+        if (interactActive && state != PlayerState.IDLE)
+        {
+            ChangePlayerState(PlayerState.INTERACT);
+            Debug.Log("InteractWorking");
         }
     }
 

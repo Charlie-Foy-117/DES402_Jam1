@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - GameManager
   - Collectable
+  - NPC
   layers:
   - Default
   - TransparentFX

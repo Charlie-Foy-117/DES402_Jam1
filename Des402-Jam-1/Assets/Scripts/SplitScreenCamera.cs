@@ -63,6 +63,10 @@ public class SplitScreenCamera : MonoBehaviour
             transform.position = startPoint;
             //Debug.Log("Camera " + camID.ToString() + ":At Rest");
         }
+        else if (transform.position.y == startPoint.y)
+        {
+            //do nothing
+        }
         else
         {
             Debug.LogWarning("Camera " + camID.ToString() + ": Tracking Nothing");

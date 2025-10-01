@@ -39,19 +39,14 @@ public class PlayerManager : MonoBehaviour
         {
             if (players[i].idleTimer > MAX_IDLE_TIME) 
             {
-                players[i].state = ChangePlayerState(i , Player.PlayerState.IDLE);
+                players[i].ChangePlayerState(Player.PlayerState.IDLE);
                 players[i].idleTimer = 0.0f;
             }
-            if (!players[i].isIdling)
+            if (!players[i].isIdling && players[i].state == Player.PlayerState.IDLE)
             {
-                players[i].state = Player.PlayerState.ACTIVE;
+                players[i].ChangePlayerState(Player.PlayerState.ACTIVE);
             }
         }
-    }
-
-    public void ChangePlayerState(int playerID, Player.PlayerState state)
-    {
-
     }
 
     IEnumerator CheckForIdling()
@@ -66,7 +61,9 @@ public class PlayerManager : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             curPos[i] = players[i].transform.position;
-            if (curPos[i] != oldPos[i] && players[i].state != Player.PlayerState.IDLE)
+
+            if (players[i].state == Player.PlayerState.INTERACT){ continue; }
+            else if (curPos[i] != oldPos[i] && players[i].state != Player.PlayerState.IDLE)
             {
                 players[i].isIdling = true;
             }
