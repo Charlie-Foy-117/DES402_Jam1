@@ -70,15 +70,18 @@ public class GameManager : MonoBehaviour
         playerAxisInput[playerIndex] = new Vector2(direction.x, 0);
         playerManager.players[playerIndex].OnDirectionalInput(direction);
 
-        m_AnyPlayerInput[playerIndex] = true;
-        playerManager.players[playerIndex].isIdling = false;
+        if (direction.x != 0)
+        {
+            m_AnyPlayerInput[playerIndex] = true;
+            playerManager.players[playerIndex].isIdling = false;
+        }
     }
 
     public void OnStartJump(int playerIndex)
     {
         playerManager.players[playerIndex].OnStartJump();
         m_AnyPlayerInput[playerIndex] = true;
-        playerManager.players[playerIndex].isIdling = false;
+       // playerManager.players[playerIndex].isIdling = false;
 
     }
 

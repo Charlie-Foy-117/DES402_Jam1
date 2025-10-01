@@ -1622,7 +1622,7 @@ MonoBehaviour:
   weight: 0
   screenID: 0
   coyoteTime: 0.2
-  state: 0
+  state: 1
   isIdling: 0
   idleTimer: 0
   showingCountdown: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     const int NUM_PLAYERS = 4;
-    const float MAX_IDLE_TIME = 5;
+    const float MAX_IDLE_TIME = 15;
 
     public Player[] players = new Player[4];
 
@@ -15,7 +15,8 @@ public class PlayerManager : MonoBehaviour
 
     GameManager gameManager;
 
-    private Vector2[] curPos, oldPos = new Vector2[4];
+    private Vector2[] curPos = new Vector2[4];
+    private Vector2[] oldPos = new Vector2[4];
 
     private void Awake()
     {
@@ -38,10 +39,19 @@ public class PlayerManager : MonoBehaviour
         {
             if (players[i].idleTimer > MAX_IDLE_TIME) 
             {
-                players[i].state = Player.PlayerState.IDLE;
+                players[i].state = ChangePlayerState(i , Player.PlayerState.IDLE);
                 players[i].idleTimer = 0.0f;
             }
+            if (!players[i].isIdling)
+            {
+                players[i].state = Player.PlayerState.ACTIVE;
+            }
         }
+    }
+
+    public void ChangePlayerState(int playerID, Player.PlayerState state)
+    {
+
     }
 
     IEnumerator CheckForIdling()
@@ -61,8 +71,6 @@ public class PlayerManager : MonoBehaviour
                 players[i].isIdling = true;
             }
         }
-
-        yield return new WaitForSeconds(5.0f);
 
         StartCoroutine(CheckForIdling());
     }
