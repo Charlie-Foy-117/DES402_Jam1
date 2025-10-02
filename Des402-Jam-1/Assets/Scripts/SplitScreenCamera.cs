@@ -77,4 +77,9 @@ public class SplitScreenCamera : MonoBehaviour
     {
         UpdateCamera();
     }
+
+    public void Reset()
+    {
+        transform.position = startPoint;
+    }
 }

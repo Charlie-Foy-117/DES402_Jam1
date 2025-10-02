@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -18,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int screenID;
     [SerializeField] private float coyoteTime;
     [SerializeField] private bool interactActive;
+    public TextMeshProUGUI playerText;
+    private Vector2 startPos;
 
     [Header("Player State")]
     public PlayerState state;
@@ -28,6 +31,8 @@ public class Player : MonoBehaviour
     [Header("Player Refs")]
     public GameManager gameManager;
     public PlayerManager playerManager;
+    public DialogueManager dialogueManager;
+    [SerializeField] private SplitScreenCamera splitScreenCamera;
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
 
@@ -43,6 +48,10 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         state = PlayerState.IDLE;
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        playerManager = gameManager.GetComponent<PlayerManager>();
+        dialogueManager = gameManager.GetComponent<DialogueManager>();
+        startPos = transform.position;
     }
 
     private void Update()
@@ -68,7 +77,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform"))
+        if (other.gameObject.CompareTag("Platform") && rb.linearVelocityY >= 0)
         {
             StartCoroutine(CoyoteTimeCoroutine());
         }
@@ -79,6 +88,10 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Collectable"))
         {
             Debug.Log("Collectable picked up");
+            if (other.GetComponent<Collectable>() != null)
+            {
+                weight = other.GetComponent<Collectable>().GetWeight();
+            }
             Destroy(other.gameObject);
             UpdateJumpForce();
         }
@@ -121,6 +134,7 @@ public class Player : MonoBehaviour
     private void OnActiveState()
     {
         playerManager.SetIdleScreenVisibility(playerID, false);
+        playerManager.SetCountdownScreenVisibility(playerID, false);
         state = PlayerState.ACTIVE;
     }
 
@@ -163,6 +177,8 @@ public class Player : MonoBehaviour
         if (interactActive && state != PlayerState.IDLE)
         {
             ChangePlayerState(PlayerState.INTERACT);
+            dialogueManager.UpdateDialogue(playerID);
+            weight = 0;
             Debug.Log("InteractWorking");
         }
     }
@@ -174,5 +190,17 @@ public class Player : MonoBehaviour
             float jumpMultiplier = 1 - weight;
             jumpForce = jumpForce * jumpMultiplier;
         }
+    }
+
+    public void PlayerReset()
+    {
+        isGrounded = true;
+        weight = 0;
+        interactActive = false;
+        //ChangePlayerState(PlayerState.IDLE);
+        isIdling = true;
+        idleTimer = 0;
+        splitScreenCamera.Reset();
+        transform.position = startPos;
     }
 }

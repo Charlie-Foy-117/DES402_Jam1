@@ -4,7 +4,8 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     const int NUM_PLAYERS = 4;
-    const float MAX_IDLE_TIME = 15;
+    const float MAX_IDLE_TIME = 20;
+    const float timeToReset = 5;
 
     public Player[] players = new Player[4];
 
@@ -41,6 +42,10 @@ public class PlayerManager : MonoBehaviour
             {
                 players[i].ChangePlayerState(Player.PlayerState.IDLE);
                 players[i].idleTimer = 0.0f;
+            }
+            if (players[i].idleTimer >= MAX_IDLE_TIME - 5.0f && !countdownText[i].IsActive())
+            {
+                SetCountdownScreenVisibility(i, true);
             }
             if (!players[i].isIdling && players[i].state == Player.PlayerState.IDLE)
             {
@@ -81,5 +86,9 @@ public class PlayerManager : MonoBehaviour
     public void SetIdleScreenVisibility(int index, bool visibility)
     {
         playerIdleScreens[index].SetActive(visibility);
+        if (visibility)
+        {
+            players[index].PlayerReset();
+        }
     }
 }
