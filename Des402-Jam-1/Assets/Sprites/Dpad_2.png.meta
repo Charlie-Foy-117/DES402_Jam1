@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: fe83d80c0a45ecb46a663c2f616c8afb
+guid: e454271b8d383af498bdf588bac1322f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6953109706985607155
-    second: Mid-Middle-Platform_0
+      213: -1534799596901854783
+    second: Dpad_2_0
+  - first:
+      213: -766155635010855109
+    second: Dpad_2_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mid-Middle-Platform_0
+      name: Dpad_2_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 19
-        width: 71
-        height: 33
+        x: 0
+        y: 0
+        width: 176
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d007dc68f87918f90800000000000000
-      internalID: -6953109706985607155
+      spriteID: 1c19049f5eb43bae0800000000000000
+      internalID: -1534799596901854783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dpad_2_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 176
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3f938c52811e55f0800000000000000
+      internalID: -766155635010855109
       vertices: []
       indices: 
       edges: []
@@ -125,7 +150,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: a99ec18479e024440b95f383f4f34050
     internalID: 0
     vertices: []
     indices: 
@@ -133,9 +158,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":176.0,"y":96.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Mid-Middle-Platform_0: -6953109706985607155
+      Dpad_2_0: -1534799596901854783
+      Dpad_2_1: -766155635010855109
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fe83d80c0a45ecb46a663c2f616c8afb
+guid: fad4e1a1321df1949a4ddc3115fb91fd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6953109706985607155
-    second: Mid-Middle-Platform_0
+      213: 8066655109536442023
+    second: Idle_Background_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mid-Middle-Platform_0
+      name: Idle_Background_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 19
-        width: 71
-        height: 33
+        x: 0
+        y: 0
+        width: 64
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d007dc68f87918f90800000000000000
-      internalID: -6953109706985607155
+      spriteID: 7a66289451482ff60800000000000000
+      internalID: 8066655109536442023
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mid-Middle-Platform_0: -6953109706985607155
+      Idle_Background_0: 8066655109536442023
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

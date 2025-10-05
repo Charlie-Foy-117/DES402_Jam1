@@ -88,6 +88,7 @@ public class PlayerManager : MonoBehaviour
         playerIdleScreens[index].SetActive(visibility);
         if (visibility)
         {
+            playerCountdownScreens[index].SetActive(false);
             players[index].PlayerReset();
         }
     }

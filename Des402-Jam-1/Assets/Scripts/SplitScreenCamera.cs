@@ -16,6 +16,8 @@ public class SplitScreenCamera : MonoBehaviour
 
     private void Awake()
     {
+        ScreenUtility.CorrectOrthographicSize(this.gameObject.GetComponent<Camera>());
+
         if (playerManager == null)
         {
             GameObject gameManager = GameObject.FindWithTag("GameManager");
