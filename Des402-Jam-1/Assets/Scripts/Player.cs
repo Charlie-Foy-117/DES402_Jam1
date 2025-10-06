@@ -63,9 +63,9 @@ public class Player : MonoBehaviour
         else { idleTimer = 0.0f; }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Floor"))
+        if (other.gameObject.CompareTag("Platform") || other.gameObject.CompareTag("Floor") && !isGrounded)
         {
             Vector3 normal = other.GetContact(0).normal;
             if (normal == Vector3.up)
@@ -77,10 +77,15 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform") && rb.linearVelocityY >= 0)
+        if (other.gameObject.CompareTag("Platform") && rb.linearVelocityY <= 0)
         {
-            StartCoroutine(CoyoteTimeCoroutine());
+            TempFix();
         }
+    }
+
+    private void TempFix() //need to fix
+    {
+        StartCoroutine(CoyoteTimeCoroutine());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
