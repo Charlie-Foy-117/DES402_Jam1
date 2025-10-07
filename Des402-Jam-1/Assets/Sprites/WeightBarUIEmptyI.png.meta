@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 81b1b5df9154a5a488a49ed2b3f5ffde
+guid: d2f78cee9d8dcea4da1a890499a60a36
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3087641316671329120
-    second: Bottle-BW-Outline_0
+      213: 5529239404188023851
+    second: WeightBarUIEmptyI_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bottle-BW-Outline_0
+      name: WeightBarUIEmptyI_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 25
-        width: 15
-        height: 26
+        x: 0
+        y: 19
+        width: 128
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 06393022b6189da20800000000000000
-      internalID: 3087641316671329120
+      spriteID: b2c38b461fdcbbc40800000000000000
+      internalID: 5529239404188023851
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Bottle-BW-Outline_0: 3087641316671329120
+      WeightBarUIEmptyI_0: 5529239404188023851
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

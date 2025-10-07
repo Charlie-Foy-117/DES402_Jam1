@@ -9,6 +9,7 @@ TagManager:
   - GameManager
   - Collectable
   - NPC
+  - ActTrigger
   layers:
   - Default
   - TransparentFX

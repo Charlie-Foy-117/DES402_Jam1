@@ -4,7 +4,7 @@ public class DialogueManager : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private PlayerManager playerManager;
-    [SerializeField] private NPC[] npcList = new NPC[4];
+    public NPC[] npcList = new NPC[4];
 
     private void Start()
     {
@@ -16,6 +16,11 @@ public class DialogueManager : MonoBehaviour
     public void UpdateDialogue(int playerIndex)
     {
         npcList[playerIndex].NextLine();
+    }
+
+    public void LeaveDialogue(int playerIndex)
+    {
+        npcList[playerIndex].lineIndex = 0;
     }
 
 }

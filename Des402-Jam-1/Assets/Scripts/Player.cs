@@ -13,11 +13,13 @@ public class Player : MonoBehaviour
     public int playerID = 0;
     [SerializeField] private float moveSpeed;
     [SerializeField] private Vector3 jump;
-    [SerializeField] private float jumpForce = 2.0f;
+    [SerializeField] private float jumpForce;
+    private float startJumpForce;
     [SerializeField] private bool isGrounded;
     [SerializeField] private float weight = 0;
     [SerializeField] private int screenID;
     [SerializeField] private float coyoteTime;
+    private float coyoteTimer;
     [SerializeField] private bool interactActive;
     public TextMeshProUGUI playerText;
     private Vector2 startPos;
@@ -52,6 +54,7 @@ public class Player : MonoBehaviour
         playerManager = gameManager.GetComponent<PlayerManager>();
         dialogueManager = gameManager.GetComponent<DialogueManager>();
         startPos = transform.position;
+        startJumpForce = jumpForce;
     }
 
     private void Update()
@@ -61,6 +64,15 @@ public class Player : MonoBehaviour
             idleTimer += Time.deltaTime;
         }
         else { idleTimer = 0.0f; }
+
+        if (isGrounded)
+        {
+            coyoteTimer = coyoteTime;
+        }
+        else
+        {
+            coyoteTimer -= Time.deltaTime;
+        }
     }
 
     private void OnCollisionStay2D(Collision2D other)
@@ -77,15 +89,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform") && rb.linearVelocityY <= 0)
+        if (other.gameObject.CompareTag("Platform") && rb.linearVelocityY <= 0 && isGrounded)
         {
-            TempFix();
+            isGrounded = false;
         }
-    }
-
-    private void TempFix() //need to fix
-    {
-        StartCoroutine(CoyoteTimeCoroutine());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -104,6 +111,11 @@ public class Player : MonoBehaviour
         {
             interactActive = true;
         }
+        if (other.gameObject.CompareTag("ActTrigger"))
+        {
+            dialogueManager.npcList[playerID].UpdateAct();
+            Destroy(other.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -111,6 +123,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("NPC"))
         {
             interactActive = false;
+            dialogueManager.LeaveDialogue(playerID);
         }
     }
 
@@ -148,21 +161,15 @@ public class Player : MonoBehaviour
         state = PlayerState.INTERACT;
     }
 
-    IEnumerator CoyoteTimeCoroutine()
-    {
-        yield return new WaitForSeconds(coyoteTime);
-        isGrounded = false;
-    }
-
     public void OnStartJump()
     {
         if (state != PlayerState.IDLE)
         {
             //Debug.Log("Player " + index + " jumped");
-            if (isGrounded)
+            if (isGrounded || coyoteTimer > 0)
             {
-                rb.AddForce(jump * jumpForce, ForceMode2D.Impulse);
                 isGrounded = false;
+                rb.AddForce(jump * jumpForce, ForceMode2D.Impulse);
             }
         }
     }
@@ -184,6 +191,7 @@ public class Player : MonoBehaviour
             ChangePlayerState(PlayerState.INTERACT);
             dialogueManager.UpdateDialogue(playerID);
             weight = 0;
+            jumpForce = startJumpForce; 
             Debug.Log("InteractWorking");
         }
     }
@@ -207,5 +215,6 @@ public class Player : MonoBehaviour
         idleTimer = 0;
         splitScreenCamera.Reset();
         transform.position = startPos;
+        dialogueManager.npcList[playerID].UpdateAct(0);
     }
 }

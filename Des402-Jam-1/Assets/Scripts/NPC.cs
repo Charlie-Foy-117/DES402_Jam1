@@ -10,9 +10,10 @@ public class NPC : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
 
     [Header("Dialogue")]
-    public string[] act1Dialogue; //Need to update with a more efficient method
-    public string[] act2Dialogue; 
-    public string[] act3Dialogue; 
+    [SerializeField] private string[] act1Dialogue; //Need to update with a more efficient method
+    [SerializeField] private string[] act2Dialogue;
+    [SerializeField] private string[] act3Dialogue;
+    [SerializeField] private string[] currentDialogue;
     public int lineIndex = 0;
     private bool previousLineNPC;
     [SerializeField] private TextMeshProUGUI dialogueText_NPC;
@@ -38,7 +39,7 @@ public class NPC : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-           // prompt.SetActive(false);
+           prompt.SetActive(true);
         }
     }
 
@@ -46,20 +47,21 @@ public class NPC : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-           // prompt.SetActive(false);
+           prompt.SetActive(false);
         }
     }
 
     public void NextLine()
     {
-        string[] actDialogue = new string[1];
+        if (prompt.activeInHierarchy) { prompt.SetActive(false); }
 
-        if (dialogueActVal == 0) { actDialogue = act1Dialogue; }
-        else if (dialogueActVal == 1) { actDialogue = act2Dialogue; }
-        else if (dialogueActVal == 2) { actDialogue = act3Dialogue; }
+        if (dialogueActVal == 0) { currentDialogue = act1Dialogue; }
+        else if (dialogueActVal == 1) { currentDialogue = act2Dialogue; }
+        else if (dialogueActVal == 2) { currentDialogue = act3Dialogue; }
         else { Debug.LogWarning("Outside of act index"); }
-            
-        if (lineIndex < actDialogue.Length)
+        
+
+        if (lineIndex < currentDialogue.Length)
         {
             if (previousLineNPC)
             {
@@ -83,20 +85,35 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public void UpdatePlayerDialgoue(int lineToDisplay)
+    private void UpdatePlayerDialgoue(int lineToDisplay)
     {
         dialogueText_NPC.gameObject.SetActive(false);
         dialogueText_Player.gameObject.SetActive(true);
 
-        dialogueText_Player.text = act1Dialogue[lineToDisplay];
+        dialogueText_Player.text = currentDialogue[lineToDisplay];
     }
 
-    public void UpdateNPCDialgoue(int lineToDisplay)
+    private void UpdateNPCDialgoue(int lineToDisplay)
     {
         dialogueText_Player.gameObject.SetActive(false);
         dialogueText_NPC.gameObject.SetActive(true);
 
-        dialogueText_NPC.text = act1Dialogue[lineToDisplay];
+        dialogueText_NPC.text = currentDialogue[lineToDisplay];
+    }
+
+    private void UpdateNPCPosition(int currentAct)
+    {
+        transform.position = new Vector2(transform.position.x, dialoguePositions[currentAct].position.y);
+    }
+
+    public void UpdateAct()
+    {
+        dialogueActVal++;
+        UpdateNPCPosition(dialogueActVal);
+    }
+    public void UpdateAct(int currentAct)
+    {
+        UpdateNPCPosition(currentAct);
     }
 
     public void SetPlayerTextObject(TextMeshProUGUI playerTextObject)

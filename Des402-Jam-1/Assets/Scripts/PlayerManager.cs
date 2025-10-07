@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     [Header("Player State UI")]
     [SerializeField] GameObject[] playerIdleScreens = new GameObject[4];
     [SerializeField] GameObject[] playerCountdownScreens = new GameObject[4];
+    [SerializeField] GameObject[] demoScreen = new GameObject[4];
     TMPro.TMP_Text[] countdownText;
 
     GameManager gameManager;
@@ -91,5 +92,10 @@ public class PlayerManager : MonoBehaviour
             playerCountdownScreens[index].SetActive(false);
             players[index].PlayerReset();
         }
+    }
+
+    public void EndDemo(int playerIndex)
+    {
+        demoScreen[playerIndex].SetActive(true);
     }
 }
