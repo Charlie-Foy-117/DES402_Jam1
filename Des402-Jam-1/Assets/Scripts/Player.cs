@@ -173,7 +173,7 @@ public class Player : MonoBehaviour
         {
             //Debug.Log($"rb {( rb == null ? "null" : "not null")}");
             transform.position += moveSpeed * (Vector3)direction * Time.deltaTime;
-            transform.position = ScreenUtility.ClampToScreen(transform.position, screenID, 0.5f);
+            transform.position = ScreenUtility.ClampToScreen(transform.position, screenID, 0.3f);
         }
     }
 
