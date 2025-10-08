@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 2460117777067411553}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.378, y: 0.111, z: 0}
-  m_LocalScale: {x: 3.3333328, y: 3.3333328, z: 2}
+  m_LocalPosition: {x: -1, y: -0.5, z: 0}
+  m_LocalScale: {x: 3, y: 2, z: 4.1778}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4465039163885298932}
@@ -161,8 +161,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280756153
-  m_fontColor: {r: 0.7264151, g: 0.15419191, b: 0.15419191, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -303,8 +303,8 @@ SpriteRenderer:
   m_SortingLayerID: -144951643
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.63925236, g: 0.990566, b: 0.630785, a: 1}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Color: {r: 0.3537736, g: 0.499739, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -330,20 +330,22 @@ MonoBehaviour:
   npcID: 0
   playerManager: {fileID: 0}
   act1Dialogue:
-  - act 1
-  - act 1.1
-  - act 1.2
-  - act 1.3
+  - What are you trying to do?
+  - I'm trying to climb up... to reach the next platform.
+  - What's wrong with staying here?
+  - It's dark down here. Lonely.
+  - I can lend you a hand.
+  - I don't need it...
   act2Dialogue:
-  - act 2
-  - act 2.1
-  - act 2.2
-  - act 2.3
+  - I know that feeling. Holding it in. Toughing it out.
+  - I don't know how to let it out.
+  - I can burden your weight.
+  - It's not so bad...
   act3Dialogue:
-  - act 3
-  - act 3.1
-  - act 3.2
-  - act 3.3
+  - You don't need to do this alone.
+  - Can you show me the way out.
+  - Only if you take the next step with me
+  - I think I can try that
   currentDialogue: []
   lineIndex: 0
   dialogueText_NPC: {fileID: 4401222337308892192}
@@ -425,13 +427,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 1.0112636}
   m_EdgeRadius: 0
 --- !u!1 &7955807970492257317
 GameObject:

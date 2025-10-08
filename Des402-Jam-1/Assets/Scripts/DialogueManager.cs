@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour
     public void LeaveDialogue(int playerIndex)
     {
         npcList[playerIndex].lineIndex = 0;
+        npcList[playerIndex].DisableText();
     }
 
 }

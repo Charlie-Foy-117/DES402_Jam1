@@ -89,6 +89,7 @@ public class PlayerManager : MonoBehaviour
         playerIdleScreens[index].SetActive(visibility);
         if (visibility)
         {
+            demoScreen[index].SetActive(false);
             playerCountdownScreens[index].SetActive(false);
             players[index].PlayerReset();
         }
@@ -97,5 +98,13 @@ public class PlayerManager : MonoBehaviour
     public void EndDemo(int playerIndex)
     {
         demoScreen[playerIndex].SetActive(true);
+        players[playerIndex].SetSpeed(0);
+        players[playerIndex].idleTimer = 15.0f;
+        //players[playerIndex].PlayerReset();
+    }
+
+    public void UpdateCountDownClock(int playerIndex, float countdown)
+    {
+        countdownText[playerIndex].text = countdown.ToString("F1");
     }
 }

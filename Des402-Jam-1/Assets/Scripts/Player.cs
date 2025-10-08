@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private Vector3 jump;
     [SerializeField] private float jumpForce;
+    private float startMoveSpeed;
     private float startJumpForce;
     [SerializeField] private bool isGrounded;
     [SerializeField] private float weight = 0;
@@ -29,6 +30,8 @@ public class Player : MonoBehaviour
     public bool isIdling;
     public float idleTimer = 0.0f;
     public bool showingCountdown = false;
+    private float countdownTimer;
+    [SerializeField] private float countdownTimerMax;
 
     [Header("Player Refs")]
     public GameManager gameManager;
@@ -55,6 +58,7 @@ public class Player : MonoBehaviour
         dialogueManager = gameManager.GetComponent<DialogueManager>();
         startPos = transform.position;
         startJumpForce = jumpForce;
+        startMoveSpeed = moveSpeed;
     }
 
     private void Update()
@@ -72,6 +76,25 @@ public class Player : MonoBehaviour
         else
         {
             coyoteTimer -= Time.deltaTime;
+        }
+
+        if (showingCountdown && isIdling)
+        {
+            if (countdownTimer > 0) 
+            { 
+                countdownTimer -= Time.deltaTime; 
+                playerManager.UpdateCountDownClock(playerID, countdownTimer);
+            }
+            else
+            {
+                countdownTimer = 5;
+                playerManager.SetCountdownScreenVisibility(playerID, false);
+            }
+        }
+        else
+        {
+            countdownTimer = 5;
+            playerManager.SetCountdownScreenVisibility(playerID, false);
         }
     }
 
@@ -102,7 +125,7 @@ public class Player : MonoBehaviour
             Debug.Log("Collectable picked up");
             if (other.GetComponent<Collectable>() != null)
             {
-                weight = other.GetComponent<Collectable>().GetWeight();
+                weight += other.GetComponent<Collectable>().GetWeight();
             }
             Destroy(other.gameObject);
             UpdateJumpForce();
@@ -207,6 +230,8 @@ public class Player : MonoBehaviour
 
     public void PlayerReset()
     {
+        moveSpeed = startMoveSpeed;
+        jumpForce = startJumpForce;
         isGrounded = true;
         weight = 0;
         interactActive = false;
@@ -217,4 +242,16 @@ public class Player : MonoBehaviour
         transform.position = startPos;
         dialogueManager.npcList[playerID].UpdateAct(0);
     }
+
+    public float GetWeight()
+    {
+        return weight;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        moveSpeed = speed;
+        jumpForce = speed;
+    }
+
 }

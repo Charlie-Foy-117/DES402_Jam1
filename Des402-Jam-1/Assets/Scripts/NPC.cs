@@ -75,6 +75,10 @@ public class NPC : MonoBehaviour
             }
             lineIndex++;
         }
+        else if (dialogueActVal == 2)
+        {
+            playerManager.EndDemo(npcID);
+        }
         else 
         { 
             playerManager.players[npcID].ChangePlayerState(Player.PlayerState.ACTIVE);
@@ -119,5 +123,12 @@ public class NPC : MonoBehaviour
     public void SetPlayerTextObject(TextMeshProUGUI playerTextObject)
     {
         dialogueText_Player = playerTextObject;
+    }
+
+    public void DisableText()
+    {
+        previousLineNPC = false;
+        dialogueText_Player.gameObject.SetActive(false);
+        dialogueText_NPC.gameObject.SetActive(false);
     }
 }
